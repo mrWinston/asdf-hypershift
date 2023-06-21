@@ -42,7 +42,7 @@ download_release() {
 	filename="$2"
 
 	# TODO: Adapt the release URL convention for hypershift
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	url="$GH_REPO/tarball/v${version}"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -59,9 +59,11 @@ install_version() {
 
 	(
 		mkdir -p "$install_path"
-		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+		pushd "$ASDF_DOWNLOAD_PATH"
+		make hypershift || fail "An error occurred while compiling $TOOL_NAME $version."
+		popd
+		cp -r "$ASDF_DOWNLOAD_PATH/bin/"* "$install_path"
 
-		# TODO: Assert hypershift executable exists.
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
