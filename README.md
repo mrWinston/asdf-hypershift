@@ -15,18 +15,14 @@
 
 # Dependencies
 
-**TODO: adapt this section**
-
-- `bash`, `curl`, `tar`: generic POSIX utilities.
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
+- `bash`, `curl`, `tar`
+- `make` and `golang >= 1.19`
 
 # Install
 
 Plugin:
 
 ```shell
-asdf plugin add hypershift
-# or
 asdf plugin add hypershift https://github.com/mrWinston/asdf-hypershift.git
 ```
 
